@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard • DIU Restaurant</title>
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-6ZJpX3l0J7w0QeK0Q0+u3P8k0vQWzF1Y7+8y9eCw7f1lQm7bGkZ4Yz8rZ1mYJr8pQ0C9pR2ryb1Ff7Wm6a5D7w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <meta name="color-scheme" content="light dark" />
+  <style>
+    /* Custom scrollbars */
+    ::-webkit-scrollbar{height:8px;width:8px}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:9999px}::-webkit-scrollbar-track{background:transparent}
+  </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100">
+  <!-- Layout wrapper -->
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-72 shrink-0 border-r border-slate-200 bg-white/70 backdrop-blur dark:bg-slate-900/50 dark:border-slate-800 hidden lg:block">
+      <div class="px-5 py-4 flex items-center gap-3 border-b border-slate-200 dark:border-slate-800">
+        <div class="size-9 grid place-items-center rounded-xl bg-emerald-500/10 text-emerald-600"><i class="fa-solid fa-burger"></i></div>
+        <div>
+          <h1 class="font-semibold leading-tight">DIU Restaurant</h1>
+          <p class="text-xs text-slate-500">Admin Dashboard</p>
+        </div>
+      </div>
+      <nav class="p-3">
+        <ul class="space-y-1 text-sm">
+          <li><a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-emerald-50 text-emerald-700 font-medium dark:hover:bg-emerald-900/30" href="#overview"><i class="fa-solid fa-gauge"></i>Overview</a></li>
+          <li><a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" href="#orders"><i class="fa-solid fa-receipt"></i>Orders</a></li>
+          <li><a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" href="#menu"><i class="fa-solid fa-utensils"></i>Menu</a></li>
+          <li><a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" href="#customers"><i class="fa-solid fa-user-group"></i>Customers</a></li>
+          <li><a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" href="#reports"><i class="fa-solid fa-chart-line"></i>Reports</a></li>
+          <li><a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" href="#settings"><i class="fa-solid fa-gear"></i>Settings</a></li>
+        </ul>
+      </nav>
+      <div class="mt-auto p-4 text-xs text-slate-500">© 2025 DIU Restaurant</div>
+    </aside>
+
+    <!-- Main -->
+    <div class="flex-1 flex flex-col">
+      <!-- Top bar -->
+      <header class="sticky top-0 z-10 bg-white/70 backdrop-blur border-b border-slate-200 dark:bg-slate-900/50 dark:border-slate-800">
+        <div class="flex items-center justify-between gap-3 px-4 py-3">
+          <div class="flex items-center gap-2">
+            <button id="openSidebar" class="lg:hidden inline-flex items-center justify-center size-10 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Open sidebar"><i class="fa-solid fa-bars"></i></button>
+            <span class="hidden sm:block text-sm text-slate-500">Dashboard</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="relative hidden md:block">
+              <input id="search" type="search" placeholder="Search orders…" class="w-64 rounded-xl bg-slate-100 px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-emerald-400 dark:bg-slate-800"/>
+              <i class="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-slate-400"></i>
+            </div>
+            <button id="theme" class="inline-flex items-center justify-center size-10 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" title="Toggle theme"><i class="fa-solid fa-moon"></i></button>
+            <div class="relative">
+              <button id="userBtn" class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1.5 hover:bg-slate-200 text-sm dark:bg-slate-800 dark:hover:bg-slate-700"><i class="fa-solid fa-user"></i> Admin</button>
+              <div id="userMenu" class="absolute right-0 mt-2 hidden w-40 rounded-lg border border-slate-200 bg-white p-2 text-sm shadow-lg dark:border-slate-800 dark:bg-slate-900">
+                <a href="#settings" class="block rounded-md px-3 py-1.5 hover:bg-slate-100 dark:hover:bg-slate-800">Profile</a>
+                <a href="#" class="block rounded-md px-3 py-1.5 hover:bg-slate-100 dark:hover:bg-slate-800">Sign out</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <main class="p-4 space-y-6">
+        <!-- KPIs -->
+        <section id="overview" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          <!-- Card -->
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs uppercase tracking-wide text-slate-500">Today Orders</p>
+                <h3 id="kpiOrders" class="mt-2 text-2xl font-semibold">—</h3>
+              </div>
+              <div class="size-11 grid place-items-center rounded-xl bg-emerald-500/10 text-emerald-600"><i class="fa-solid fa-receipt"></i></div>
+            </div>
+            <p id="kpiOrdersDelta" class="mt-3 text-xs text-slate-500">—</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs uppercase tracking-wide text-slate-500">Revenue</p>
+                <h3 id="kpiRevenue" class="mt-2 text-2xl font-semibold">—</h3>
+              </div>
+              <div class="size-11 grid place-items-center rounded-xl bg-orange-500/10 text-orange-600"><i class="fa-solid fa-sack-dollar"></i></div>
+            </div>
+            <p id="kpiRevenueDelta" class="mt-3 text-xs text-slate-500">—</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs uppercase tracking-wide text-slate-500">Active Tables</p>
+                <h3 id="kpiTables" class="mt-2 text-2xl font-semibold">—</h3>
+              </div>
+              <div class="size-11 grid place-items-center rounded-xl bg-sky-500/10 text-sky-600"><i class="fa-solid fa-chair"></i></div>
+            </div>
+            <p id="kpiTablesDelta" class="mt-3 text-xs text-slate-500">—</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs uppercase tracking-wide text-slate-500">Avg. Order Value</p>
+                <h3 id="kpiAOV" class="mt-2 text-2xl font-semibold">—</h3>
+              </div>
+              <div class="size-11 grid place-items-center rounded-xl bg-fuchsia-500/10 text-fuchsia-600"><i class="fa-solid fa-chart-column"></i></div>
+            </div>
+            <p id="kpiAOVDelta" class="mt-3 text-xs text-slate-500">—</p>
+          </div>
+        </section>
+
+        <!-- Charts -->
+        <section id="reports" class="grid grid-cols-1 xl:grid-cols-3 gap-4">
+          <div class="xl:col-span-2 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex items-center justify-between">
+              <h3 class="font-semibold">Sales (Last 7 days)</h3>
+              <select id="salesRange" class="rounded-lg border border-slate-200 bg-white px-2 py-1 text-sm dark:bg-slate-900 dark:border-slate-700">
+                <option value="7">7 days</option>
+                <option value="14">14 days</option>
+                <option value="30">30 days</option>
+              </select>
+            </div>
+            <canvas id="salesChart" class="mt-4"></canvas>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <h3 class="font-semibold">Top Dishes</h3>
+            <canvas id="dishChart" class="mt-4"></canvas>
+          </div>
+        </section>
+
+        <!-- Orders table -->
+        <section id="orders" class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div class="flex items-center justify-between gap-3">
+            <h3 class="font-semibold">Recent Orders</h3>
+            <div class="flex items-center gap-2">
+              <input id="orderSearch" placeholder="Search…" class="rounded-lg bg-slate-100 px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-emerald-400 dark:bg-slate-800" />
+              <button class="rounded-lg bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-700"><i class="fa-solid fa-plus mr-1"></i>New Order</button>
+            </div>
+          </div>
+          <div class="mt-3 overflow-x-auto">
+            <table class="min-w-full text-sm">
+              <thead class="text-left">
+                <tr class="border-b border-slate-200 dark:border-slate-800">
+                  <th class="py-2 pr-3">#</th>
+                  <th class="py-2 pr-3">Customer</th>
+                  <th class="py-2 pr-3">Items</th>
+                  <th class="py-2 pr-3">Total</th>
+                  <th class="py-2 pr-3">Status</th>
+                  <th class="py-2 pr-3">Date</th>
+                </tr>
+              </thead>
+              <tbody id="orderBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Menu management (simple) -->
+        <section id="menu" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <h3 class="font-semibold">Add Menu Item</h3>
+            <form id="menuForm" class="mt-3 grid grid-cols-2 gap-3">
+              <input class="col-span-2 rounded-lg bg-slate-100 px-3 py-2 dark:bg-slate-800" placeholder="Dish name" required />
+              <input class="rounded-lg bg-slate-100 px-3 py-2 dark:bg-slate-800" type="number" min="0" step="0.01" placeholder="Price (৳)" required />
+              <select class="rounded-lg bg-slate-100 px-3 py-2 dark:bg-slate-800">
+                <option>Category</option>
+                <option>Starter</option>
+                <option>Main</option>
+                <option>Dessert</option>
+                <option>Beverage</option>
+              </select>
+              <button class="rounded-lg bg-emerald-600 px-3 py-2 font-medium text-white hover:bg-emerald-700">Add</button>
+            </form>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <h3 class="font-semibold">Menu Items</h3>
+            <ul id="menuList" class="mt-3 space-y-2 text-sm"></ul>
+          </div>
+        </section>
+
+        <!-- Customers (placeholder) -->
+        <section id="customers" class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <h3 class="font-semibold">Customers</h3>
+          <p class="mt-2 text-sm text-slate-500">Connect to your backend API (e.g., <code>/api/customers</code>) and render the list here.</p>
+        </section>
+
+        <!-- Settings -->
+        <section id="settings" class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <h3 class="font-semibold">Settings</h3>
+          <div class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <label class="flex items-center justify-between rounded-xl border border-slate-200 p-3 dark:border-slate-800">
+              <span>Enable sound notifications</span>
+              <input type="checkbox" class="h-4 w-4" checked>
+            </label>
+            <label class="flex items-center justify-between rounded-xl border border-slate-200 p-3 dark:border-slate-800">
+              <span>Auto-accept online orders</span>
+              <input type="checkbox" class="h-4 w-4">
+            </label>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Sidebar open (mobile)
+    document.getElementById('openSidebar').addEventListener('click', () => {
+      const el = document.getElementById('sidebar');
+      el.classList.toggle('hidden');
+      el.classList.toggle('fixed');
+      el.classList.toggle('inset-0');
+      el.classList.toggle('z-20');
+      el.classList.toggle('bg-white');
+    });
+
+    // Theme toggle
+    const themeBtn = document.getElementById('theme');
+    themeBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+
+    // User menu
+    document.getElementById('userBtn').addEventListener('click', () => {
+      document.getElementById('userMenu').classList.toggle('hidden');
+    });
+
+    // Dummy data (replace with API calls)
+    const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+    const orders = Array.from({length: 12}).map((_, i) => ({
+      id: 1000 + i,
+      customer: ['Sadia','Arif','Tanvir','Nabila','Rafi','Anika','Mahin','Raisa','Shuvo','Ayesha','Kamal','Jinia'][i%12],
+      items: rand(1,5),
+      total: +(rand(180,1200) + Math.random()).toFixed(2),
+      status: ['Pending','Preparing','Completed','Cancelled'][rand(0,3)],
+      date: new Date(Date.now() - rand(0, 6)*86400000).toLocaleDateString()
+    }));
+
+    // KPIs
+    const todayCount = orders.filter(o => o.date === new Date().toLocaleDateString()).length || rand(6,12);
+    document.getElementById('kpiOrders').textContent = todayCount;
+    document.getElementById('kpiOrdersDelta').textContent = `vs yesterday: +${rand(1,6)}%`;
+
+    const revenue = orders.reduce((s,o)=>s+o.total,0);
+    document.getElementById('kpiRevenue').textContent = `৳ ${revenue.toFixed(2)}`;
+    document.getElementById('kpiRevenueDelta').textContent = `7d change: +${rand(5,15)}%`;
+
+    document.getElementById('kpiTables').textContent = rand(4,12);
+    document.getElementById('kpiTablesDelta').textContent = `peak hour: ${rand(18,21)}:00`;
+
+    document.getElementById('kpiAOV').textContent = `৳ ${(revenue/orders.length).toFixed(2)}`;
+    document.getElementById('kpiAOVDelta').textContent = `+${rand(1,8)}% this week`;
+
+    // Orders table render + search
+    const tbody = document.getElementById('orderBody');
+    const renderRows = (rows) => {
+      tbody.innerHTML = rows.map(o => `
+        <tr class="border-b border-slate-100 dark:border-slate-800">
+          <td class="py-2 pr-3">${o.id}</td>
+          <td class="py-2 pr-3">${o.customer}</td>
+          <td class="py-2 pr-3">${o.items}</td>
+          <td class="py-2 pr-3">৳ ${o.total.toFixed(2)}</td>
+          <td class="py-2 pr-3">
+            <span class="rounded-full px-2 py-0.5 text-xs font-medium ${o.status==='Completed'?'bg-emerald-100 text-emerald-700':o.status==='Preparing'?'bg-amber-100 text-amber-700':o.status==='Cancelled'?'bg-rose-100 text-rose-700':'bg-slate-100 text-slate-700'}">${o.status}</span>
+          </td>
+          <td class="py-2 pr-3">${o.date}</td>
+        </tr>`).join('');
+    };
+    renderRows(orders);
+
+    document.getElementById('orderSearch').addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase();
+      renderRows(orders.filter(o => `${o.id} ${o.customer} ${o.status}`.toLowerCase().includes(q)));
+    });
+
+    // Charts
+    const salesCtx = document.getElementById('salesChart');
+    const dishCtx = document.getElementById('dishChart');
+
+    const days = (n) => Array.from({length:n}).map((_,i)=>{
+      const d = new Date(Date.now() - (n-1-i)*86400000);
+      return `${d.getMonth()+1}/${d.getDate()}`;
+    });
+
+    let salesChart = new Chart(salesCtx, {
+      type: 'line',
+      data: {
+        labels: days(7),
+        datasets: [{
+          label: 'Revenue (৳)',
+          data: Array.from({length:7}).map(()=> rand(800, 4000)),
+          tension: .35,
+          fill: true,
+          borderWidth: 2
+        }]
+      },
+      options: {
+        plugins: {legend: {display: false}},
+        scales: {y: {beginAtZero: true}}
+      }
+    });
+
+    new Chart(dishCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Burger', 'Pasta', 'Steak', 'Salad', 'Lassi'],
+        datasets: [{
+          label: 'Qty',
+          data: [54, 34, 28, 20, 17],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins: {legend: {display: false}},
+        scales: {y: {beginAtZero: true}}
+      }
+    });
+
+    document.getElementById('salesRange').addEventListener('change', (e)=>{
+      const n = +e.target.value;
+      salesChart.data.labels = days(n);
+      salesChart.data.datasets[0].data = Array.from({length:n}).map(()=> rand(800, 4000));
+      salesChart.update();
+    });
+
+    // Simple menu form (client-side only)
+    const menuForm = document.getElementById('menuForm');
+    const menuList = document.getElementById('menuList');
+    const renderMenuItem = (name, price, cat) => `
+      <li class="flex items-center justify-between rounded-xl border border-slate-200 p-3 dark:border-slate-800">
+        <div>
+          <p class="font-medium">${name} <span class="text-slate-400">· ${cat}</span></p>
+          <p class="text-sm text-slate-500">৳ ${(+price).toFixed(2)}</p>
+        </div>
+        <button class="text-rose-600 hover:text-rose-700" title="Remove"><i class="fa-solid fa-trash"></i></button>
+      </li>`;
+
+    menuForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const [name, price, cat] = Array.from(menuForm.elements).map(el => el.value);
+      if(!name || !price || cat==='Category') return;
+      menuList.insertAdjacentHTML('afterbegin', renderMenuItem(name, price, cat));
+      menuForm.reset();
+    });
+
+    // Dismiss user menu on outside click
+    document.addEventListener('click', (e)=>{
+      const menu = document.getElementById('userMenu');
+      const btn = document.getElementById('userBtn');
+      if(!menu.contains(e.target) && !btn.contains(e.target)) menu.classList.add('hidden');
+    });
+
+    // NOTE: For integration
+    // - Replace dummy arrays with fetch('/api/orders') etc.
+    // - In Laravel, create routes that return JSON and call them here.
+    // - Protect this page with auth middleware.
+  </script>
+</body>
+</html>

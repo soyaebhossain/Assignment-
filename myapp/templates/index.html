@@ -1,0 +1,252 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menu</title>
+    <!-- linking Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+     <!-- linking swiper css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"
+/>
+    <!-- linking css file -->
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <!-- Header Section / Navbar -->
+    <header>
+        <nav class="navbar section-content">
+            <a href="#" class="nav-logo">
+            <h2 class="logo-text">🍔 DIU Restaurant</h2>
+            </a>
+            <ul class="nav-menu">
+                <button id="menu-close-button" class="fas fa-times"></button>
+                <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Menu</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Gallery</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">About Us</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+            </ul>
+            <button id="menu-open-button" class="fas fa-bars"></button>
+        </nav>
+    </header>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+        <div class="section-content">
+            <div class="hero-details">
+                <h2 class="hero-title">Welcome to Our Restaurant</h2>
+                <h3 class="hero-subtitle">Delicious Food, Cozy Atmosphere</h3>
+                <p class="description">Enjoy a variety of dishes made with fresh ingredients and served with a smile.</p>
+
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-view">View Menu</a>
+                    <a href="#" class="btn btn-order">Order Now</a>
+                    <a href="#" class="btn btn-contact">Contact Us</a>
+                </div>
+            </div>
+            <div class="hero-image-wrapper">
+                <img src="{% static 'images/restaurant-hero.png' %}" alt="Delicious food served at our restaurant" class="hero-image">
+            </div>
+        </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about">
+            <div class="section-content">
+                <div class="about-image-wrapper">
+                <img src="{% static 'images/about-image.jpg' %}" alt="About DIU Restaurant" class="about-image">
+                </div>
+                <div class="about-details">
+                <h2 class="section-title">About Us</h2>
+                <p class="about-description">At DIU Restaurant, we believe in serving quality food with a touch of love. Our chefs are dedicated to creating mouth-watering dishes that will leave you coming back for more.</p>
+                <div class ="social-link-list">
+                <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!--Menu Section -->
+        <section class="menu">
+            <div class="section-content">
+                <h2 class="section-title">Our Menu</h2>
+                <p class="menu-description">Explore our delicious offerings crafted with the finest ingredients.</p>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="{% static 'images/hot-beverages.png' %}" alt="Menu Item 1" class="menu-item-image">
+                        <h3 class="menu-item-title">Spaghetti Carbonara</h3>
+                        <p class="menu-item-description">Classic Italian pasta with creamy sauce, pancetta, and parmesan.</p>
+                    </div>
+                    <div class="menu-item">
+                        <img src="{% static 'images/cold-beverages.png' %}" alt="Menu Item 2" class="menu-item-image">
+                        <h3 class="menu-item-title">Margherita Pizza</h3>
+                        <p class="menu-item-description">Fresh mozzarella, tomatoes, and basil on a crispy crust.</p>
+                    </div>
+                    <div class="menu-item">
+                        <img src="{% static 'images/refreshment.png' %}" alt="Menu Item 2" class="menu-item-image">
+                        <h3 class="menu-item-title">Chicken Tikka Masala</h3>
+                        <p class="menu-item-description">Tender chicken pieces in a spiced tomato and creamy sauce.</p>
+                    </div>
+                    <div class="menu-item">
+                        <img src="{% static 'images/special-combo.png' %}" alt="Menu Item 2" class="menu-item-image">
+                        <h3 class="menu-item-title">Special Combo</h3>
+                        <p class="menu-item-description">A delightful combination of our chef's special dishes.</p>
+                    </div>
+                    <div class="menu-item">
+                        <img src="{% static 'images/desserts.png' %}" alt="Menu Item 3" class="menu-item-image">
+                        <h3 class="menu-item-title">Caesar Salad</h3>
+                        <p class="menu-item-description">Romaine lettuce, croutons, and parmesan with Caesar dressing.</p>
+                    </div>
+                    <div class="menu-item">
+                        <img src="{% static 'images/burger-frenchfries.png' %}" alt="Menu Item 4" class="menu-item-image">
+                        <h3 class="menu-item-title">Grilled Salmon</h3>
+                        <p class="menu-item-description">Fresh salmon fillet grilled to perfection with lemon butter sauce.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials-section">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="section-content">
+                <div class="slider-container swiper">
+                    <div class="slider-wrapper">
+                            <ul class="testimonials-list swiper-wrapper">
+                                <li class="testimonial swiper-slide">    
+                                    <img src="{% static 'images/user-1.jpg' %}" alt="Customer 5" class="testimonial-image">
+                                    <h3 class="testimonial-name">David Wilson</h3>
+                                    <i class="testimonial-feedback">"A fantastic place to enjoy a meal with friends and family. The ambiance is perfect for any occasion."</i>
+                                </li>
+                                <li class="testimonial swiper-slide">    
+                                    <img src="{% static 'images/user-2.jpg' %}" alt="Customer 5" class="testimonial-image">
+                                    <h3 class="testimonial-name">David Wilson</h3>
+                                    <i class="testimonial-feedback">"A fantastic place to enjoy a meal with friends and family. The ambiance is perfect for any occasion."</i>
+                                </li>
+                                <li class="testimonial swiper-slide">    
+                                    <img src="{% static 'images/user-3.jpg' %}" alt="Customer 5" class="testimonial-image">
+                                    <h3 class="testimonial-name">David Wilson</h3>
+                                    <i class="testimonial-feedback">"A fantastic place to enjoy a meal with friends and family. The ambiance is perfect for any occasion."</i>
+                                </li> 
+                                <li class="testimonial swiper-slide">    
+                                    <img src="{% static 'images/user-4.jpg' %}" alt="Customer 5" class="testimonial-image">
+                                    <h3 class="testimonial-name">David Wilson</h3>
+                                    <i class="testimonial-feedback">"A fantastic place to enjoy a meal with friends and family. The ambiance is perfect for any occasion."</i>
+                                </li>  
+                                <li class="testimonial swiper-slide">    
+                                    <img src="{% static 'images/user-5.jpg' %}" alt="Customer 5" class="testimonial-image">
+                                    <h3 class="testimonial-name">David Wilson</h3>
+                                    <i class="testimonial-feedback">"A fantastic place to enjoy a meal with friends and family. The ambiance is perfect for any occasion."</i>
+                                </li> 
+                            </ul>    
+                                <div class=" swiper-pagination"></div>
+                                <div class="swiper-slide-button swiper-button-prev"></div>
+                                <div class="swiper-slide-button swiper-button-next"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!--Gallery Section -->
+        <section class="gallery">
+                <h2 class="section-title">Gallery</h2>
+                <div class="section-content">
+                    <p class="gallery-description">A glimpse into the delightful experiences at our restaurant.</p>
+                <ul class="gallery-list">   
+                    <li class="gallery-item">
+                        <img src="{% static 'images/gallery-1.jpg' %}" alt="Gallery Image 1" class="gallery-image">
+                    </li>
+                    <li class="gallery-item">
+                        <img src="{% static 'images/gallery-2.jpg' %}" alt="Gallery Image 2" class="gallery-image">
+                    </li>
+                    <li class="gallery-item">  
+                        <img src="{% static 'images/gallery-3.jpg' %}" alt="Gallery Image 3" class="gallery-image">
+                    </li>
+                    <li class="gallery-item">  
+                        <img src="{% static 'images/gallery-4.jpg' %}" alt="Gallery Image 4" class="gallery-image">
+                    </li>
+                    <li class="gallery-item">
+                        <img src="{% static 'images/gallery-5.jpg' %}" alt="Gallery Image 5" class="gallery-image">
+                    </li>
+                    <li class="gallery-item">
+                        <img src="{% static 'images/gallery-6.jpg' %}" alt="Gallery Image 6" class="gallery-image">
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+         <!--Contact Section -->
+        <section class="contact">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="section-content">
+                <ul class="contact-info-list">
+                    <li class="contact-info">
+                        <i class="fas fa-map-marker-alt contact-info-icon"></i>
+                        <p>123 Main Street, City, Country</p>   
+                    </li>
+                    <li class="contact-info">
+                        <i class="fas fa-phone-alt contact-info-icon"></i>
+                        <p>+1 234 567 890</p>
+                    </li>
+                     <li class="contact-info">
+                        <i class="fas fa-regular fa-clock contact-info-icon"></i>
+                        <p>Mon - Saturday: 9:00 AM - 10:00 PM</p>
+                    </li>
+                    <li class="contact-info">
+                        <i class="fas fa-regular fa-clock contact-info-icon"></i>
+                        <p>Sunday: Closed</p>
+                    </li>
+                    <li class="contact-info">
+                        <i class="fas fa-envelope contact-info-icon"></i>
+                        <p>info@restaurant.com</p>
+                    </li>
+                    <li class="contact-info">
+                        <i class="fas fa-solid fa-globe icon"></i>
+                        <p>www.restaurant.com</p>
+                    </li>
+                </ul>
+
+                <form action="#" class="contact-form">
+                    <input type="text" class="form-input" placeholder="Your Name" required>
+                    <input type="email" class="form-input" placeholder="Your Email" required>
+                    <textarea class="form-input" placeholder="Your Message" required></textarea>
+                    <button class="submit-button">Send Message</button>
+
+            </div>
+        </section>
+    
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="section-content">
+        <p class="copyright-text">&copy; 2025 DIU Restaurant</p>
+        </div>
+        <div class="social-link-list">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+
+        <p class="policy-text">
+            <a href="#" class="policy-link">Privacy Policy</a> | 
+            <span class="policy-separator"></span>
+            <a href="#" class="policy-link">Terms of Service</a> | 
+            <a href="#" class="policy-link">Cookie Policy</a>
+        </p>
+    
+    </footer>
+
+     <!-- linking swiper css -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+
+    <!-- linking javascript file -->
+    <script src="{% static 'script.js' %}"></script>
+</body> 
+</html>

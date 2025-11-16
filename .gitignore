@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.db
+.env
+.env.*
+
+# Django
+*.secret
+*.local
+*.log
+/staticfiles/
+/media/
+/db.sqlite3
+
+# VSCode & IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# Node (React + Tailwind)
+node_modules/
+build/
+dist/
+*.lock
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# React (Vite/CRA)
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+
+# TailwindCSS
+tailwind.config.js
+postcss.config.js
+
+# Coverage reports
+htmlcov/
+coverage.xml
+.coverage
+.cache/
+
+# Optional: If using Docker
+*.pid
+*.sock
+*.pid.lock
+docker-compose.override.yml
+.venv/
+venv/
+ENV/
